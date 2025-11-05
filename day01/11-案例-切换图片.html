@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <button :disabled="buttonDisabled1" @click="prevAndProhibit()">上一页</button>
+      <div>
+        <img :src="list[index]" alt="" />
+      </div>
+      <button :disabled="buttonDisabled2" @click="nextAndProhibit()">下一页</button>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+      const app = new Vue({
+        el: '#app',
+        data: {
+          index: 0,
+          buttonDisabled1: true,
+          buttonDisabled2: false,
+          list: ['./imgs/11-00.gif', './imgs/11-01.gif', './imgs/11-02.gif', './imgs/11-03.gif', './imgs/11-04.png', './imgs/11-05.png'],
+        },
+        methods: {
+          // 封装方法：上一页并执行 prohibit
+          prevAndProhibit() {
+            this.index--
+            this.judgeButton()
+            if (this.index === -1) {
+              this.index = 0
+            }
+          },
+          // 封装方法：下一页并执行 prohibit
+          nextAndProhibit() {
+            this.index++
+            this.judgeButton()
+            if (this.index === this.list.length) {
+              this.index = this.list.length - 1
+            } 
+          },
+          judgeButton() {
+            if(this.index === 0) {
+              this.buttonDisabled1 = true
+            } else {
+              this.buttonDisabled1 = false
+            }
+            if (this.index === this.list.length - 1) {
+              this.buttonDisabled2 = true
+            } else {
+              this.buttonDisabled2 = false
+            }
+          },
+        },
+      })
+    </script>
+  </body>
+</html>
